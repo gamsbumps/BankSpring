@@ -1,7 +1,13 @@
 package com.qualiti.bank.model;
 
 import java.util.Arrays;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 //collections sort s� ordena se ouver implementa��o do comparable
+
+@Entity
+@DiscriminatorValue(value="CLIENTE")
 public class Cliente extends Pessoa implements Comparable<Cliente> {
 	
 	public Cliente(){

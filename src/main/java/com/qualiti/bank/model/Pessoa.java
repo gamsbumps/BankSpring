@@ -2,17 +2,49 @@ package com.qualiti.bank.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pessoa")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="tipo",
+			discriminatorType=DiscriminatorType.STRING)
 public abstract class Pessoa extends BancoEntity<String> {
 	
 
-	private String nome;
+	
+	@Id
+	//@Column(name = "cpf") opcional quando o nome da coluna for igual ao nome do atributo
 	private String cpf;
+	
+	//@Column(name = "nome")
+	private String nome;
+	
+	@Column(name="datanascimento")//quando houver camel case, usar @column para enviar a coluna desejada 
 	private LocalDate dataNascimento;
+	
+	@OneToOne
+	@PrimaryKeyJoinColumn
 	private Endereco endereco;
+	
 	private String telefone;
 	private String login;
 	private String senha;
 	private String email;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(insertable=false, updatable=false)//quando for um enum, usar essa coluna
 	private TipoPessoa tipo;
 	
 	
