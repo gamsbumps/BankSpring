@@ -104,7 +104,7 @@ public class BancoTelaPrincipal implements CommandLineRunner {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BancoTelaPrincipal window = new BancoTelaPrincipal();
+					BancoTelaPrincipal window = context.getBean(BancoTelaPrincipal.class);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

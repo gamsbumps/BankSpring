@@ -34,8 +34,8 @@ public abstract class Pessoa extends BancoEntity<String> {
 	@Column(name="datanascimento")//quando houver camel case, usar @column para enviar a coluna desejada 
 	private LocalDate dataNascimento;
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
+	@OneToOne//cada pessoa tem um endereco
+	@PrimaryKeyJoinColumn//a chave primaria de endereco sera a a chave de juncao
 	private Endereco endereco;
 	
 	private String telefone;
