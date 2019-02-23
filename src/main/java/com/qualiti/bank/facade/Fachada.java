@@ -99,4 +99,10 @@ public class Fachada implements IFachada {
 		
 	}
 
+	@Override
+	public String nomesClientesOrdemAlfabetica() throws BancoException {
+		
+		return negocioClientes.nomesClientesOrdemAlfabetica();
+	}
+
 }

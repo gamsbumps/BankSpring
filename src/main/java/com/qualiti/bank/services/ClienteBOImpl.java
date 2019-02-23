@@ -99,9 +99,15 @@ public class ClienteBOImpl implements ClienteBO {
 		}
 
 		Optional<Cliente> clienteBusca = repositorio.findById(cpf);
-		if (!clienteBusca.isPresent()) {
-			return repositorio.save(clienteBusca.get());
+		if (clienteBusca.isPresent()) {
+			return clienteBusca.get();
 		}
 		return null;
+	}
+
+	@Override
+	public String nomesClientesOrdemAlfabetica() throws BancoException {
+		
+		return repositorio.nomesClientesOrdemAlfabetica();
 	}
 }

@@ -1,16 +1,41 @@
 package com.qualiti.bank.model;
 
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.qualiti.bank.exceptions.BancoException;
 
+@Entity
+@Table(name = "conta")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="tipo",
+discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue(value = "CORRENTE")
 public class Conta extends BancoEntity<String> {
 
+	@Id
 	private String numero;
 	private double saldo;
-	private LocalDate dataAbertura;
-	private TipoConta tipo;
+	
+	@ManyToOne//muitas contas para um cliente MANY: CONTAS TO ONE: CLIENTE
+	@JoinColumn(name="cpf")
 	private Cliente cliente;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(insertable=false, updatable=false)
+	private TipoConta tipo;
+	
 
 	// @Override
 	// public boolean equals(Object obj) {
@@ -58,7 +83,7 @@ public class Conta extends BancoEntity<String> {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("descri��o conta:\n");
+		sb.append("descricao conta:\n");
 		sb.append("Numero: ").append(this.numero).append("\n");
 		sb.append("Saldo: ").append(this.saldo).append("\n");
 		sb.append("Cliente: ").append(this.cliente.getCpf()).append("\n");
@@ -107,14 +132,6 @@ public class Conta extends BancoEntity<String> {
 
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
-	}
-
-	public LocalDate getDataAbertura() {
-		return dataAbertura;
-	}
-
-	public void setDataAbertura(LocalDate dataAbertura) {
-		this.dataAbertura = dataAbertura;
 	}
 
 	public TipoConta getTipo() {

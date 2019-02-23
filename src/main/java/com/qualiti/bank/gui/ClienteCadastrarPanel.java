@@ -16,6 +16,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.qualiti.bank.exceptions.BancoException;
@@ -26,6 +27,7 @@ import com.qualiti.bank.model.TipoPessoa;
 import com.qualiti.bank.util.DateUtil;
 
 @Component
+@Scope("prototype")
 public class ClienteCadastrarPanel extends JPanel {
 	private JTextField nomeTxt;
 	private JTextField loginTxt;
@@ -350,6 +352,7 @@ public class ClienteCadastrarPanel extends JPanel {
 					end.setCidade(cidade);
 					end.setCep(cep);
 					end.setUf(uf);
+					end.setCpf(cpf);
 
 					Cliente cliente = new Cliente();
 					cliente.setCpf(cpf);
@@ -390,7 +393,7 @@ public class ClienteCadastrarPanel extends JPanel {
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// pegar todos os campos digitados. valida a data e recebe o
-				// endere�o. adiciona novos dados do endere�o, procura o
+				// endereco. adiciona novos dados do endereco, procura o
 				// cliente para alterar os dados
 				String cpf = cpfTxt.getText();
 				String nome = nomeTxt.getText();
@@ -411,14 +414,7 @@ public class ClienteCadastrarPanel extends JPanel {
 					String cep = cepTxt.getText();
 					String uf = (String) ufcb.getSelectedItem();
 
-					Endereco end = new Endereco();
-					end.setLogradouro(logradouro);
-					end.setNumero(numero);
-					end.setComplemento(complemento);
-					end.setBairro(bairro);
-					end.setCidade(cidade);
-					end.setCep(cep);
-					end.setUf(uf);
+					
 
 					Cliente cliente = fachada.procurar(cpf);
 					if (cliente != null) {
@@ -429,9 +425,16 @@ public class ClienteCadastrarPanel extends JPanel {
 						cliente.setSenha(senha);
 						cliente.setEmail(email);
 						cliente.setTelefone(telefone);
-
-						cliente.setEndereco(end);
-
+						
+						Endereco end = cliente.getEndereco();
+						end.setLogradouro(logradouro);
+						end.setNumero(numero);
+						end.setComplemento(complemento);
+						end.setBairro(bairro);
+						end.setCidade(cidade);
+						end.setCep(cep);
+						end.setUf(uf);
+						
 						fachada.atualizarCliente(cliente);
 						JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso", "Atualizar cliente",
 								JOptionPane.INFORMATION_MESSAGE);

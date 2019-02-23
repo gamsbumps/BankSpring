@@ -2,6 +2,7 @@ package com.qualiti.bank.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -34,7 +35,7 @@ public abstract class Pessoa extends BancoEntity<String> {
 	@Column(name="datanascimento")//quando houver camel case, usar @column para enviar a coluna desejada 
 	private LocalDate dataNascimento;
 	
-	@OneToOne//cada pessoa tem um endereco
+	@OneToOne(cascade=CascadeType.ALL)//cada pessoa tem um endereco
 	@PrimaryKeyJoinColumn//a chave primaria de endereco sera a a chave de juncao
 	private Endereco endereco;
 	

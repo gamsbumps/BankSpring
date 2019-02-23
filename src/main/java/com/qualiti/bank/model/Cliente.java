@@ -1,14 +1,20 @@
 package com.qualiti.bank.model;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 //collections sort s� ordena se ouver implementa��o do comparable
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue(value="CLIENTE")
 public class Cliente extends Pessoa implements Comparable<Cliente> {
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="cliente")
+	private Set<Conta> contas;
 	
 	public Cliente(){
 		super();

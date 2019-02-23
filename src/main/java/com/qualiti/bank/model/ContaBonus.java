@@ -1,11 +1,18 @@
 package com.qualiti.bank.model;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /*armazenar o bonus acumulado
  * a cada deposito, 10% deve ficar armazenador na conta
  */
+
+@Entity
+@DiscriminatorValue(value="BONUS")
 public class ContaBonus extends Conta {
 
 	private double bonus;
-	@Override //redefini��o de metodo da classe pai
+	@Override //redefinicao de metodo da classe pai
 	public void creditar(double valor){
 		bonus = bonus + valor*0.1;
 		super.creditar(valor);
